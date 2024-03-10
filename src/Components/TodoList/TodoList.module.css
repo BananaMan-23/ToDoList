@@ -1,0 +1,31 @@
+.todo__list {
+  display: flex;
+  max-width: 440px;
+  justify-content: space-evenly;
+  margin: 0 auto;
+  align-items: center;
+  background-color: #fff;
+  border-top: 1px solid #e6e6e6;
+}
+.todo__input {
+  overflow-wrap: break-word;
+  padding: 15px 15px 15px 60px;
+  display: block;
+  line-height: 1.2;
+  transition: color 0.4s;
+  font-weight: 400;
+  font-size: 24px;
+  color: #484848;
+  width: 260px 
+}
+.input {
+  overflow-wrap: break-word;
+  padding: 15px 15px 15px 60px;
+  display: block;
+  line-height: 1.2;
+  transition: color 0.4s;
+  font-weight: 400;
+  font-size: 24px;
+  color: #484848;
+  width: 260px;
+}
