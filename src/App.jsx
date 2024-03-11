@@ -69,7 +69,6 @@ function App() {
       <TodoInput handleEnter={handleEnter} input={input} setInput={setInput} />
       {filteredTasks && filteredTasks.map((task) => (
         <TodoList
-          key={task.id}
           id={task.id}
           value={task.value}
           status={task.status}
