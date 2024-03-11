@@ -1,84 +1,87 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addTodo,
+  removeTodo,
+  toggleTodo,
+  removeCompleted,
+  setFilter,
+} from "./redux/actions";
 import Header from "./Components/Header/Header";
 import TodoInput from "./Components/todoInput/TodoInput";
 import Footer from "./Components/Footer/Footer";
 import TodoList from "./Components/TodoList/TodoList";
+import { selectTasks, selectFilter } from "./redux/selectors";
+
 function App() {
+  const dispatch = useDispatch();
+  const tasks = useSelector(selectTasks);
+  const filter = useSelector(selectFilter);
   const [input, setInput] = useState("");
-  const [task, setTask] = useState([]);
-  const [taskFilter, setTaskFilter] = useState("");
-  const count = task.length;
 
   function addTask() {
-    const newTask = {
-      id: Math.random(),
-      value: input,
-      status: false,
-      editMode: false,
-    };
     if (input.trim()) {
-      let Todo = [newTask, ...task];
-      setTask(Todo);
+      dispatch(addTodo(input));
       setInput("");
     }
   }
+
   function handleEnter(event) {
     if (event.key === "Enter") {
       addTask();
     }
   }
+
   function removeTask(id) {
-    let del = task.filter((e) => e.id !== id);
-    setTask(del);
-  }
-  function toggleTask(id) {
-    let toggle = task.map((e) =>
-      e.id === id ? { ...e, status: !e.status } : { ...e }
-    );
-    setTask(toggle);
+    dispatch(removeTodo(id));
   }
 
-  let copiTask = task;
-  switch (taskFilter) {
+  function toggleTask(id) {
+    dispatch(toggleTodo(id));
+  }
+
+  function removeCompled() {
+    dispatch(removeCompleted());
+  }
+
+  function setFilterHandler(filter) {
+    dispatch(setFilter(filter));
+  }
+
+  let filteredTasks = tasks;
+  switch (filter) {
     case "All":
-      copiTask = task;
+      filteredTasks = tasks;
       break;
     case "Active":
-      copiTask = task.filter((e) => e.status === false);
+      filteredTasks = tasks.filter((task) => task.status === false);
       break;
     case "Completed":
-      copiTask = task.filter((e) => e.status === true);
+      filteredTasks = tasks.filter((task) => task.status === true);
       break;
     default:
       break;
   }
 
-  function removeCompled() {
-    const activeTasks = task.filter((e) => e.status === false);
-    setTask(activeTasks);
-  }
-
-  const taskList = copiTask.map((e) => (
-    <TodoList
-      id={e.id}
-      value={e.value}
-      status={e.status}
-      removeTask={removeTask}
-      toggleTask={toggleTask}
-      task={task}
-      setTask={setTask}
-    />
-  ));
   return (
     <div className="App">
       <Header />
       <TodoInput handleEnter={handleEnter} input={input} setInput={setInput} />
-      {taskList}
-      {task.length === 0 ? null : (
+      {filteredTasks && filteredTasks.map((task) => (
+        <TodoList
+          key={task.id}
+          id={task.id}
+          value={task.value}
+          status={task.status}
+          removeTask={removeTask}
+          toggleTask={toggleTask}
+        />
+      ))}
+      {tasks.length === 0 ? null : (
         <Footer
-          setTaskFilter={setTaskFilter}
-          count={count}
+          count={tasks.length}
           removeCompled={removeCompled}
+          setFilter={setFilterHandler}
         />
       )}
     </div>

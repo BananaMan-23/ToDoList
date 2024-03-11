@@ -18,19 +18,19 @@ export default function GroupButton(props) {
       <ButtonGroup variant="text" aria-label="Basic button group">
         <Button
           style={{ color: "black", fontSize: "14px" }}
-          onClick={() => props.setTaskFilter("All")}
+          onClick={() => props.setFilter("All")}
         >
           All
         </Button>
         <Button
           style={{ color: "black", fontSize: "14px" }}
-          onClick={() => props.setTaskFilter("Active")}
+          onClick={() => props.setFilter("Active")}
         >
           Active
         </Button>
         <Button
           style={{ color: "black", fontSize: "14px" }}
-          onClick={() => props.setTaskFilter("Completed")}
+          onClick={() => props.setFilter("Completed")}
         >
           Completed
         </Button>
