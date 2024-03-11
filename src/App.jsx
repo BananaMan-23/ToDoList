@@ -7,8 +7,8 @@ function App() {
   const [input, setInput] = useState("");
   const [task, setTask] = useState([]);
   const [taskFilter, setTaskFilter] = useState("");
-  const count = task.length
-  
+  const count = task.length;
+
   function addTask() {
     const newTask = {
       id: Math.random(),
@@ -53,6 +53,11 @@ function App() {
       break;
   }
 
+  function removeCompled() {
+    const activeTasks = task.filter((e) => e.status === false);
+    setTask(activeTasks);
+  }
+
   const taskList = copiTask.map((e) => (
     <TodoList
       id={e.id}
@@ -69,7 +74,13 @@ function App() {
       <Header />
       <TodoInput handleEnter={handleEnter} input={input} setInput={setInput} />
       {taskList}
-      {task.length === 0 ? null : <Footer setTaskFilter={setTaskFilter} count={count}/>}
+      {task.length === 0 ? null : (
+        <Footer
+          setTaskFilter={setTaskFilter}
+          count={count}
+          removeCompled={removeCompled}
+        />
+      )}
     </div>
   );
 }
