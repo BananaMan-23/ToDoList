@@ -56,7 +56,7 @@ function App() {
     case "Active":
       filteredTasks = tasks.filter((task) => task.status === false);
       break;
-    case "Completed":
+    case "Completet":
       filteredTasks = tasks.filter((task) => task.status === true);
       break;
     default:
